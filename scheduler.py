@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 class SafeScheduler(Scheduler):
     """
-    Copied from tuconnect-healthcheck: https://ghe.tusimple.io/TuSimple/tuconnect-healthcheck/blob/dev/backend/scheduler.py
     An implementation of Scheduler that catches jobs that fail, logs their
     exception tracebacks as errors, optionally reschedules the jobs for their
     next run time, and keeps going.
@@ -87,24 +86,3 @@ class BackgroundScheduler:
         continuous_thread = ScheduleThread()
         continuous_thread.start()
         logger.info('Started scheduler in background...')
-
-
-def start_scheduler():
-    sch = Scheduler(jobs=fetch_jobs())
-    sch.start_in_background()
-
-
-if __name__ == "__main__":
-    from jobs import fetch_truckmate_job
-
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s [%(levelname)s] %(filename)s: %(message)s',
-    )
-
-    def test():
-        print('test1')
-
-    sch = Scheduler(job=fetch_truckmate_job, interval=5)
-    sch.start_in_background()
-    print('end')
